@@ -53,7 +53,7 @@ def get_parsed_items(path):
             for j in range(caches_links_count):
                 cache_id, cache_latency = map(int, config.readline().split(' '))
                 endpoint.caches[cache_id] = cache_latency
-                result['cache_servers'][cache_id].endpoints[i] = cache_latency
+                result['cache_servers'][cache_id].endpoints[i] = endpoint
             endpoint.caches[-1] = datacenter.size
             endpoint.videos = result['videos']
             result['endpoints'][i] = endpoint
