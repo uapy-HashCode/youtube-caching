@@ -1,9 +1,9 @@
-from .task_types import items
+from task_types import items
 
-videos = items[0]
-end_points = items[1]
-cache_servers = items[2]
-
+items = items()
+videos = items['videos']
+end_points = items['endpoints']
+cache_servers = items['cache_servers']
 
 def process_video(video_weights_per_cache, request, end_point, cache_id):
 
@@ -24,16 +24,18 @@ configuration = []
 # Run by each cache
 for cache in cache_servers:
 
-    video_weights_per_cache = []
+    video_weights_per_cache = {}
     # Run by each end_point
-    for end_point in cache.end_points:
+    for end_point in cache.endpoints:
         # Run by each video for end_point
-        for request in end_point.requests:
+        if end_point is not None:
+            for request in end_point.requests:
             # calculate weight
-            process_video(video_weights_per_cache, request = request, end_point=end_point)
+                process_video(video_weights_per_cache, request = request, end_point=end_point, cache_id=cache.id)
 
+    print(video_weights_per_cache)
     # sort videos
-    v = sorted(video_weights_per_cache, lambda x: x[0])
+    v = sorted(video_weights_per_cache,key = lambda x: x.values()[0])
 
     # process cache server
     cache_config = {'cache_id': cache.id, 'number_of_videos': 0, 'videos': []}
