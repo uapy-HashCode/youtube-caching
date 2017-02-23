@@ -48,7 +48,7 @@ def get_parsed_items(path):
         datacenter.size=float('infinity')
         for i in range(param_dict['endpoints_count']):
             latency, caches_links_count = map(int, config.readline().split(' '))
-            endpoint = Endpoint(id=i, caches_count=caches_links_count+1)
+            endpoint = Endpoint(id=i, caches_count=param_dict['caches_count'])
             datacenter.endpoints[i] = latency
             for j in range(caches_links_count):
                 cache_id, cache_latency = map(int, config.readline().split(' '))
@@ -67,5 +67,5 @@ def get_parsed_items(path):
 
 
 if __name__ == '__main__':
-    items = get_parsed_items('test.txt')
+    items = get_parsed_items('kittens.in')
     print(items['videos'], items['endpoints'], items['cache_servers'])
