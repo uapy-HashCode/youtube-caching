@@ -73,6 +73,6 @@ def get_parsed_items(path):
 #         for i in range(len)
 
 
-if __name__ == '__main__':
-    items = get_parsed_items('kittens.in')
-    print(items['videos'], items['endpoints'], items['cache_servers'])
+#if __name__ == '__main__':
+items = get_parsed_items('kittens.in')
+#print(items['videos'], items['endpoints'], items['cache_servers'])
