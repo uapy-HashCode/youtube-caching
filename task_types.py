@@ -67,14 +67,18 @@ def get_parsed_items(path):
 
 
 def write_output_to_file(cache_servers, path):
-    filtered_caches = [(i, cache) for i, cache in enumerate(cache_servers) if cache[0].fill]
+    caches_count = len(cache_servers)
+    # filtered_caches = [(i, cache) for i, cache in enumerate(cache_servers) if cache[0].fill]
     with open(path, 'w') as output_file:
-        output_file.write(str(len(filtered_caches)) + '\n')
-        for i, cache in filtered_caches:
-            output_file.write('{0} {1}\n'.format(i, cache))
+        output_file.write(str(caches_count) + '\n')
+        for cache in cache_servers[:len(cache_servers) - 1]:
+            result_line = str(cache['cache_id'])
+            videos = [str(video['video_id']) for video in cache['config']['videos']]
+            result_line = result_line + ' ' + ' '.join(videos)
+            output_file.write('{0}\n'.format(result_line))
     return True
 
 
 #if __name__ == '__main__':
-items = get_parsed_items('kittens.in')
+items = get_parsed_items('me_at_the_zoo.in')
 #print(items['videos'], items['endpoints'], items['cache_servers'])
